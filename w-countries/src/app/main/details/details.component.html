@@ -1,3 +1,20 @@
-<mat-card>
-    {{this.country}}
+<mat-card class="detail">
+  <mat-card-title>
+    {{ this.dataCountry.name.official }}
+  </mat-card-title>
+  <mat-card-content class="detail_content">
+    <span>Capital: {{ this.dataCountry.capital }}</span>
+    <span> Population : {{ this.dataCountry.population }} </span>
+  </mat-card-content>
 </mat-card>
+<div class="weather">
+    <span type="text" class="city" >City</span>>
+    <i class="weather-icon owf"></i>
+    <div class="weather-error"></div>
+    <div class="description-container">
+      <span class="temperature">22</span>
+      <span class="weather-description">22</span>
+    </div>
+    <div class="wind">22</div>
+    <div class="humidity">22</div>
+  </div>

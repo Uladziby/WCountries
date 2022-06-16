@@ -1,3 +1,4 @@
+import { ResponseICountry } from './../interfaces/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,8 +16,8 @@ export class RestCountriesService {
     );
   }
 
-  fetchDetails(country : string): Observable<ICountry> {
-    return this.http.get<ICountry>(
+  fetchDetails(country : string): Observable<Array<ICountry>> {
+    return this.http.get<Array<ICountry>>(
       `https://restcountries.com/v3.1/name/${country}`
     );
   }

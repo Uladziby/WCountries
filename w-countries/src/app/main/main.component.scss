@@ -1,8 +1,29 @@
-.card_continent{
-    cursor: pointer;
-    border: solid 2px;
+:host {
+  width: 100%;
+  margin: auto 5%;
 }
 
-.card_continent:hover{
-    transform: scale(1.1);
+.card_continent {
+  cursor: pointer;
+  border: solid 1px white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: black;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain auto;
+  &_content {
+    min-height: 3rem;
+    padding: 5%;
+  }
+}
+
+.card_continent:hover {
+  transform: scale(1.1);
+}
+
+.regions-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

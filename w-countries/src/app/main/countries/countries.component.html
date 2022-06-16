@@ -1,3 +1,7 @@
-<div class="card_continent" *ngFor="let country of this.listOfCountries" [style.background-image]="'url(' + country.flags.png + ')'" (click)="getDetailsAboutCountry($event)">
-    {{country.name.common}}
+<div class="container_cards">
+    <div class="card_continent" *ngFor="let country of this.listOfCountries" [style.background-image]="'url(' + country.flags.png + ')'" (click)="getDetailsAboutCountry($event)">
+        <div class="card_continent_content">
+            {{country.name.common}}
+        </div>
+    </div>
 </div>

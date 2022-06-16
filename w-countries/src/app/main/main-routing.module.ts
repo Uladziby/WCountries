@@ -5,9 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { DetailsComponent } from './details/details.component';
 
 const routes: Routes = [
-  { path: '', component: MainComponent, data: {animation: 'Auth'} },
-  {path : ':id', component: CountriesComponent},
-  {path : ':id/:id', component: DetailsComponent}
+  { path: '', component: MainComponent, data: {animation: 'Region'} },
+  {path : ':id', component: CountriesComponent, data: {animation: 'Country'}},
+  {path : ':id/:id', component: DetailsComponent, data: {animation: 'Detail'}}
 ];
 
 @NgModule({
