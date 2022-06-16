@@ -1,14 +1,16 @@
+import { RestCountriesService } from './services/api.service';
 import { ContinentsService } from './services/continents.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,HttpClientModule
   ],
-  providers:[ContinentsService]
+  providers:[ContinentsService, RestCountriesService]
 })
 export class SharedModule { }

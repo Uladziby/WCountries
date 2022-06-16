@@ -1,4 +1,4 @@
-import { IContinents } from './../interfaces/interfaces';
+import { IContinents, ICountry } from './../interfaces/interfaces';
 export class ContinentsService {
   public listOfContinents: IContinents[] = [
     { name: 'Europe', id: 1, img: 'dsd' },
@@ -8,4 +8,5 @@ export class ContinentsService {
     { name: 'America', id: 5, img: 'dsd' },
   ];
   constructor() {}
+
 }

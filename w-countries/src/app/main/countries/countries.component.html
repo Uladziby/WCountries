@@ -1,1 +1,3 @@
-<p>countries works!</p>
+<div class="card_continent" *ngFor="let country of this.listOfCountries" [style.background-image]="'url(' + country.flags.png + ')'" (click)="getDetailsAboutCountry($event)">
+    {{country.name.common}}
+</div>

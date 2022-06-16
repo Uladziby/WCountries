@@ -7,11 +7,13 @@ export interface IContinents {
 export interface ICountry {
   name: {
     common: string;
+    official : string;
   };
+  capital : string;
   currencies: {
-    string: {
-      name: 'South Korean won';
-      symbol: '₩';
+    'EUR': {
+      name: string;
+      symbol: string;
     };
   };
   languages: {};
@@ -23,4 +25,6 @@ export interface ICountry {
     png: string;
     svg: string;
   };
+  borders: String[];
+  subregion: string;
 }

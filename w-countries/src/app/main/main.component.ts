@@ -1,3 +1,4 @@
+import { IContinents } from './../shared/interfaces/interfaces';
 import { ContinentsService } from './../shared/services/continents.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  public arrOfRegions!:String[];
+  public arrOfRegions!:IContinents[];
   constructor(private continents : ContinentsService,  private router: Router, ) { }
 
   ngOnInit(): void {
@@ -17,8 +18,7 @@ export class MainComponent implements OnInit {
 
   fetchListCountries(event :Event){
     const element = event.target as HTMLElement
-    console.log(element.textContent)
     //dispatch countries to the store
-    this.router.navigate([`/${element.textContent}`])
+    this.router.navigate([element.innerText])
   }
 }
