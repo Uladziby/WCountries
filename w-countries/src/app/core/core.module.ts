@@ -10,6 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import { PopupComponent } from './components/popup/popup.component';
+import { LoaderComponent } from './compomemts/loader/loader.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -25,7 +26,8 @@ const materialModules = [
   declarations: [
     HeaderComponent,
     FooterComponent,
-    PopupComponent
+    PopupComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
