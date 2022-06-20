@@ -4,9 +4,7 @@ export interface IContinents {
   id: number;
 }
 
-export interface ResponseICountry {
-  0: Array<ICountry>;
-}
+
 export interface ICountry {
   name: {
     common: string;

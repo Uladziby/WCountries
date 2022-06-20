@@ -1,4 +1,3 @@
-import { ResponseICountry } from './../interfaces/interfaces';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -9,6 +8,9 @@ import { ICountry } from '../interfaces/interfaces';
 })
 export class RestCountriesService {
   constructor(private http: HttpClient) {}
+
+//перписать запрос который возвращает строку 
+//add spinner
 
   fetchRegion(region : string): Observable<ICountry[]> {
     return this.http.get<ICountry[]>(

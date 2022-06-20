@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import { PopupComponent } from './components/popup/popup.component';
 
 const materialModules = [
   MatToolbarModule,
@@ -16,12 +18,14 @@ const materialModules = [
   MatInputModule,
   MatSlideToggleModule,
   MatIconModule,
+  MatDialogModule,  
 ];
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,

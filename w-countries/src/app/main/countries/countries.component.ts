@@ -1,3 +1,4 @@
+import { select, Store } from '@ngrx/store';
 import { RestCountriesService } from './../../shared/services/api.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -13,6 +14,7 @@ import {
   tap,
 } from 'rxjs';
 import { ICountry } from 'src/app/shared/interfaces/interfaces';
+import * as fromCountries from '../../core/store/reducers/countries.reducer'
 
 @Component({
   selector: 'app-countries',
@@ -27,12 +29,13 @@ export class CountriesComponent implements OnInit {
   public country!: HTMLElement; 
   public subs!: Subscription;
 
-  constructor(private http: HttpClient, private router : Router, private route : ActivatedRoute, private restService : RestCountriesService){}
+  constructor(private store: Store, private router : Router, private route : ActivatedRoute, private restService : RestCountriesService){}
 
   ngOnInit(): void {
     this.subs = this.route.params.subscribe((params)=>{
       this.region = params['id'];
     })
+    //this.region = this.store.pipe(select( fromCountries.selectRegion)) 
     this.aSab = this.restService.fetchRegion(this.region)
       .pipe(
         tap((data: ICountry[]) => {
