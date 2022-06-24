@@ -1,9 +1,13 @@
-<div  class="regions-container">
+<div class="regions-container">
   <h2>Choose region!</h2>
-  <div gdColumns="200px 200px 200px 200px" gdColumns.lg="200px 200px 200px 200px 200px" gdColumns.sm="200px 200px 200px"
-    gdColumns.xs="150px 150px" gdGap="10px 10px">
-    <div class="card_continent" *ngFor="let region of this.arrOfRegions" (click)='fetchListCountries($event)'>
-        {{region.name}}
+  <div class="block-card_continent">
+    <div
+      class="card_continent"
+      [ngStyle]="{'background-image':  'url(' + region.img + ')'}"
+      *ngFor="let region of this.arrOfRegions"
+      (click)="fetchListCountries($event)"
+    >
+      <div class="card_continent-name">{{ region.name }}</div>
     </div>
-</div>
+  </div>
 </div>

@@ -109,5 +109,7 @@
       }
     }
   },
-  "defaultProject": "w-countries"
+  "cli": {
+    "analytics": "6dcc72ca-8163-4ed8-8e31-49a11b2dcc4e"
+  }
 }

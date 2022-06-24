@@ -10,7 +10,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import { PopupComponent } from './components/popup/popup.component';
-import { LoaderComponent } from './compomemts/loader/loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ProgressBarIndeterminate } from './components/loader/loader.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 const materialModules = [
   MatToolbarModule,
@@ -19,7 +21,9 @@ const materialModules = [
   MatInputModule,
   MatSlideToggleModule,
   MatIconModule,
-  MatDialogModule,  
+  MatDialogModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
 ];
 
 @NgModule({
@@ -27,7 +31,7 @@ const materialModules = [
     HeaderComponent,
     FooterComponent,
     PopupComponent,
-    LoaderComponent
+    ProgressBarIndeterminate,
   ],
   imports: [
     CommonModule,
@@ -36,6 +40,7 @@ const materialModules = [
   exports : [
     HeaderComponent,
     FooterComponent,
+    ProgressBarIndeterminate,
     ...materialModules,
   ]
 })

@@ -2,14 +2,18 @@
   width: 100%;
   margin: auto 5%;
 }
+
 .card_continent {
   cursor: pointer;
   border: solid 1px white;
-  font-family: Georgia, "Times New Roman", Times, serif;
-  color: black;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  color: #ff4081;
+  font-size: 1.5rem;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain auto;
+  background-size: cover;
   &_content {
     min-height: 3rem;
     padding: 5%;

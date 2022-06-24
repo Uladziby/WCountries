@@ -7,6 +7,10 @@ const routes: Routes = [
     path: RouteEnum.world,
     loadChildren: () => import('./main/main.module').then((m) => m.MainModule),
   },
+  {
+    path: RouteEnum.world,
+    loadChildren: () => import('./main/main.module').then((m) => m.MainModule),
+  },
 /*   {
     path: RouteEnum.countries,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),

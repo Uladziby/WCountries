@@ -8,13 +8,13 @@ export  interface AppState{
 export interface FeatureMain {
     region : string;
     countries : ICountry[],
-    detail : ICountry,
+    detail : ICountry | undefined,
   }
 
-export const initialState = {
-    region : '',
-    countries : [],
-    detail : [],
+export const initialState : FeatureMain = {
+    region: '',
+    countries: [],
+    detail: undefined
 }
 
 export const countryReducer = createReducer(
@@ -25,7 +25,18 @@ export const countryReducer = createReducer(
             region: region,
         }
     )),
-
+    on(CountryActions.fetchCountries, (state, {countries}) =>(
+        {
+            ...state, 
+            countries: countries,
+        }
+    )),
+    on(CountryActions.fetchDetail, (state, {detail}) =>(
+        {
+            ...state, 
+            detail: detail,
+        }
+    )),
 )
 
 /* export const getRegionStore = createFeatureSelector<AppState>('region');
