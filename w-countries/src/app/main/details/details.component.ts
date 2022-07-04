@@ -1,61 +1,90 @@
+import { AppState, IServicePhotos } from './../../shared/interfaces/interfaces';
 import { RestCountriesService } from './../../shared/services/api.service';
-import { Component, OnInit } from '@angular/core';
-import {  ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {
+  AfterViewInit,
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, Observable } from 'rxjs';
 import { ICountry } from 'src/app/shared/interfaces/interfaces';
-import { tap } from 'rxjs/operators'; 
+import { find, tap, map } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import * as fromCountries from '../../core/store/reducers/countries.reducer';
+import { ImagesService } from 'src/app/shared/services/imgages.service';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
 })
-
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, OnDestroy{
+  public currentBG!: string;
+  public query!: string;
   public country!: string;
-  public dataCountry:ICountry = {
+  public countries$!: Observable<ICountry>;
+  public dataCountry: ICountry = {
     name: {
       common: '',
-      official: ''
+      official: '',
     },
     capital: '',
     currencies: {
       EUR: {
         name: '',
-        symbol: ''
-      }
+        symbol: '',
+      },
     },
-    languages: '',
     population: 0,
     map: {
-      googleMaps: ''
+      googleMaps: '',
     },
     flags: {
       png: '',
-      svg: ''
+      svg: '',
     },
     borders: [],
-    subregion: ''
-  } ;
+    subregion: '',
+    area: 0,
+    languages: {},
+  };
   public subs!: Subscription;
-  constructor(private route : ActivatedRoute, private restService : RestCountriesService) {}
+  public subsImg!: Subscription;
+  constructor(
+    private store: Store<AppState>,
+    private route: ActivatedRoute,
+    private imgService: ImagesService
+  ) {}
+  
 
   ngOnInit(): void {
-    this.subs = this.route.params.subscribe((params)=>{
-      this.country = params['id'];
-    })
-    this.subs = this.restService.fetchDetails(this.country)
-    .pipe(
-      tap((data: Array<ICountry>) => {
-        console.log(data)
-        this.dataCountry = data[0];
-        //dispatch list country to the store отобразить данные красиво
+    this.countries$ = this.store.pipe(select(fromCountries.selectDetailStore));
+  this.subs =   this.countries$
+      .pipe(
+        tap((data: ICountry) => {
+          this.dataCountry = data;
+        })
+      )
+      .subscribe((country) => {
+       // this.query = country.name.common;
+        this.subsImg = this.imgService
+          .fetchPhotoByQuery(country.name.common)
+          .pipe(
+            tap((data: IServicePhotos) => {
+              this.currentBG = data.photos[0].src.original;
+              console.log(data.photos[0], 'photo');
+            })
+          )
+          .subscribe()
       })
-    ).subscribe()
 
+    console.log(this.query, 'this.query');
   }
-  fetchDetails(){
-   
-  }
-
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+    this.subsImg.unsubscribe();
+   }
 }

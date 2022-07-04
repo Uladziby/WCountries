@@ -1,16 +1,40 @@
-<mat-card
-  class="detail"
-  [ngStyle]="{ 'background-image': 'url(' + dataCountry.flags.png + ')' }"
->
-  <mat-card-title>
-    {{ this.dataCountry.name.official }}
-  </mat-card-title>
-  <mat-card-content class="detail_content">
-    <span>Capital: {{ this.dataCountry.capital }}</span>
-    <span> Population : {{ this.dataCountry.population }} </span>
-  </mat-card-content>
-</mat-card>
-<div class="weather">
+<div class="container_detail" [style.background-image]="'url(' + currentBG + ')'">
+  <mat-card class="detail">
+    <mat-card-title>
+      {{ this.dataCountry.name.official }}
+    </mat-card-title>
+    <mat-card-content class="detail_content">
+      <div
+        class="detail_content-left"
+        [ngStyle]="{ 'background-image': 'url(' + dataCountry.flags.png + ')' }"
+      ></div>
+      <div class="detail_content-right">
+        <span>capital: {{ this.dataCountry.capital }}</span>
+        <span> population : {{ this.dataCountry.population }} people </span>
+        <span> area : {{ this.dataCountry.area }} km^2 </span>
+        <ng-container>
+          languages :
+          <li *ngFor="let lang of dataCountry.languages | keyvalue">
+            {{ lang.value }}
+          </li>
+        </ng-container>
+        <span> borders : {{ this.dataCountry.borders}}</span>
+        <ng-container
+          *ngFor="let currency of this.dataCountry.currencies | keyvalue"
+        >
+          currencies :
+          <li
+            *ngFor="let elem of dataCountry.currencies[currency.key] | keyvalue"
+          >
+            {{ elem.value }}
+          </li>
+        </ng-container>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- <div class="weather">
   <span type="text" class="city">City</span>>
   <i class="weather-icon owf"></i>
   <div class="weather-error"></div>
@@ -20,4 +44,4 @@
   </div>
   <div class="wind">22</div>
   <div class="humidity">22</div>
-</div>
+</div> -->

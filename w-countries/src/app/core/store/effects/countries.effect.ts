@@ -14,12 +14,12 @@ export class CountriesEffects {
 
   fetchRegion$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(CountriesAction.fetchRegion),
-      exhaustMap((newRegion)=>
+  /*     ofType(CountriesAction.fetchCountries),
+      switchMap((action)=>
         this.countriesService
-          .fetchRegion(newRegion)
-          .pipe(map((region) => CountriesAction.fetchRegion({ region })))
-      )
+          .fetchRegion(action.countries)
+          .pipe(map((region) => CountriesAction.fetchCountries({ region })))
+      ) */
     )
   );
 }

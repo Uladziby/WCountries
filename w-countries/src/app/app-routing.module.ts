@@ -11,26 +11,7 @@ const routes: Routes = [
     path: RouteEnum.world,
     loadChildren: () => import('./main/main.module').then((m) => m.MainModule),
   },
-/*   {
-    path: RouteEnum.countries,
-    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  },
-  {
-    path: RouteEnum.boards,
-    loadChildren: () =>
-      import('./main/board.module').then((m) => m.BoardModule),
-    canLoad: [LoginGuard],
-    canActivate: [LoginGuard],
-    component: BoardListComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: RouteEnum.country + '/:id',
-    loadChildren: () =>
-      import('./board-route/board-route.module').then(
-        (m) => m.BoardRouteModule
-      ),
-  }, */
+
   { path: '**', redirectTo: '404' },
 ];
 

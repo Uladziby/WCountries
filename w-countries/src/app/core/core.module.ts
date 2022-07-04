@@ -28,10 +28,10 @@ const materialModules = [
 
 @NgModule({
   declarations: [
+    ProgressBarIndeterminate,
     HeaderComponent,
     FooterComponent,
     PopupComponent,
-    ProgressBarIndeterminate,
   ],
   imports: [
     CommonModule,
@@ -40,7 +40,6 @@ const materialModules = [
   exports : [
     HeaderComponent,
     FooterComponent,
-    ProgressBarIndeterminate,
     ...materialModules,
   ]
 })

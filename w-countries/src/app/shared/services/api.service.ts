@@ -12,14 +12,14 @@ export class RestCountriesService {
 //перписать запрос который возвращает строку 
 //add spinner
 
-  fetchRegion(region : string): Observable<ICountry[]> {
+ fetchRegion(region : string): Observable<ICountry[]> {
     return this.http.get<ICountry[]>(
       `https://restcountries.com/v3.1/region/${region}`
     );
   }
 
-  fetchDetails(country : string): Observable<Array<ICountry>> {
-    return this.http.get<Array<ICountry>>(
+  fetchDetails(country : string): Observable<ICountry[]> {
+    return this.http.get<ICountry[]>(
       `https://restcountries.com/v3.1/name/${country}`
     );
   }

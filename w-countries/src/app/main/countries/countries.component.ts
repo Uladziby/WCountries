@@ -1,3 +1,4 @@
+import { selectRegion } from './../../core/store/reducers/countries.reducer';
 import { fetchCountries } from './../../core/store/actions/countries.action';
 import { select, Store } from '@ngrx/store';
 import { RestCountriesService } from './../../shared/services/api.service';
@@ -14,8 +15,8 @@ import {
   Subscription,
   tap,
 } from 'rxjs';
-import { ICountry } from 'src/app/shared/interfaces/interfaces';
-import * as fromCountries from '../../core/store/reducers/countries.reducer'
+import { AppState, ICountry } from 'src/app/shared/interfaces/interfaces';
+import * as fromCountries from '../../core/store/reducers/countries.reducer';
 import * as CountryAction from '../../core/store/actions/countries.action';
 
 @Component({
@@ -24,46 +25,58 @@ import * as CountryAction from '../../core/store/actions/countries.action';
   styleUrls: ['./countries.component.scss'],
 })
 export class CountriesComponent implements OnInit {
-
+  public isFetching: boolean = true;
   public aSab: Subscription | undefined;
-  public listOfCountries: ICountry[] =[];
+  public listOfCountries: ICountry[] = [];
   public region!: string;
-  public country!: HTMLElement; 
+  public region$!: Observable<string>;
+  public country!: HTMLElement;
   public subs!: Subscription;
+  public targetCountry!: Observable<ICountry>;
 
-  constructor(private store: Store, private router : Router, private route : ActivatedRoute, private restService : RestCountriesService){}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private route: ActivatedRoute,
+    private restService: RestCountriesService
+  ) {}
 
   ngOnInit(): void {
-    this.subs = this.route.params.subscribe((params)=>{
-      this.region = params['id'];
-    })
-    //this.region = this.store.pipe(select( fromCountries.selectRegion)) 
-    this.aSab = this.restService.fetchRegion(this.region)
+    this.region$ = this.store.pipe(select(selectRegion));
+    this.subs = this.region$.subscribe((region) => {
+      this.region = region;
+    });
+
+    setTimeout(() => {
+      this.isFetching = false;
+    }, 2000);
+
+    this.aSab = this.restService
+      .fetchRegion(this.region)
       .pipe(
         tap((data: ICountry[]) => {
           this.listOfCountries = data;
-          console.log(data) 
-          this.store.dispatch(CountryAction.fetchCountries({countries : data}))
+          this.store.dispatch(
+            CountryAction.fetchCountries({ countries: data })
+          );
         })
       )
       .subscribe();
   }
 
+  getDetailsAboutCountry(event: Event) {
+    this.country = event.target as HTMLElement;
 
-  getDetailsAboutCountry(event : Event){
-    this.country  = event.target as HTMLElement;
-    //dispatch countries to the store
-    this.listOfCountries.find((elem)=>{
-      this.country.innerText === elem.name.common
-    })
-   this.store.dispatch(CountryAction.fetchDetail({detail :  this.listOfCountries.find((elem)=>{
-      this.country.innerText === elem.name.common
-    })}))
-
-    this.router.navigate(['Europe', this.country.innerText])
-    this.aSab?.unsubscribe();
-    this.subs.unsubscribe();
-    
-    //navigate  country 
+    this.aSab = this.restService
+      .fetchDetails(this.country.innerText)
+      .pipe(
+        tap((data) => {
+          console.log(...data, 'adad')
+          this.store.dispatch(CountryAction.fetchDetail({ detail: data[0] }));
+        })
+      ).subscribe();
+    this.router.navigate(['Europe', this.country.innerText]);
+/*     this.aSab?.unsubscribe();
+    this.subs.unsubscribe(); */
   }
 }

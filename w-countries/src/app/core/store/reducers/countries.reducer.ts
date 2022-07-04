@@ -1,20 +1,38 @@
-import { ICountry } from 'src/app/shared/interfaces/interfaces';
+import { AppState, FeatureMain, ICountry } from 'src/app/shared/interfaces/interfaces';
 import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
 import * as CountryActions from '../actions/countries.action';
 
-export  interface AppState{
-    main: FeatureMain ;
-}
-export interface FeatureMain {
-    region : string;
-    countries : ICountry[],
-    detail : ICountry | undefined,
-  }
 
+
+export const emptyCountry : ICountry ={
+    name: {
+        common: '',
+        official: ''
+    },
+    capital: '',
+    currencies: {
+        EUR: {
+            name: '',
+            symbol: ''
+        }
+    },
+    population: 0,
+    map: {
+        googleMaps: ''
+    },
+    flags: {
+        png: '',
+        svg: ''
+    },
+    borders: [],
+    subregion: '',
+    area: 0,
+    languages: {}
+}
 export const initialState : FeatureMain = {
     region: '',
     countries: [],
-    detail: undefined
+    detail:emptyCountry,
 }
 
 export const countryReducer = createReducer(
@@ -34,7 +52,7 @@ export const countryReducer = createReducer(
     on(CountryActions.fetchDetail, (state, {detail}) =>(
         {
             ...state, 
-            detail: detail,
+            detail : detail
         }
     )),
 )
@@ -43,11 +61,11 @@ export const countryReducer = createReducer(
 export const getCountriesStore = createFeatureSelector<AppState>('countries');
 export const getDetailStore = createFeatureSelector<AppState>('detail'); */
 
-export const selectFeatureMain = (state: AppState) => state.main;
+export const selectFeatureMain =  (state: AppState) => state.main;
 
 export const selectRegion = createSelector(
     selectFeatureMain,
-    (state : FeatureMain)=> state.region
+    (state : FeatureMain) => state.region
 )
 export const selectCountriesStore = createSelector(
     selectFeatureMain,

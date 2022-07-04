@@ -1,3 +1,4 @@
+<mat-progress-bar *ngIf="this.isFetching" mode="indeterminate"></mat-progress-bar>
 <div class="container_cards">
     <div class="card_continent" *ngFor="let country of this.listOfCountries" [style.background-image]="'url(' + country.flags.png + ')'" (click)="getDetailsAboutCountry($event)">
         <div class="card_continent_content">
