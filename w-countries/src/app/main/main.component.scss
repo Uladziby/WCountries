@@ -34,11 +34,12 @@
 
 .card_continent:hover {
   transform: scale(1.1);
+  border: none;
 }
 .block-card_continent {
   display: flex;
   gap: 1rem;
-  width: 100%;
+  width: 97%;
   height: 88%;
 }
 .regions_container {
@@ -46,11 +47,13 @@
   flex-direction: column;
   height: 100%;
   &-title{
+    transition: all 2s ease;
     @include Roboto-primary;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     padding: 2% 0;
+    color: #ff4081;
   }
 }

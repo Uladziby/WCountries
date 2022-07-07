@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   width: 100%;
 }
 .container_detail {
@@ -13,16 +14,14 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  flex-direction: column;
+
 }
 .detail {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 700;
   color: white;
-  font-size: 2rem;
   background-color: transparent;
   &_content {
     display: flex;
@@ -39,6 +38,10 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      font-family: "Roboto";
+      font-style: normal;
+      font-size: 1.6rem;
+      gap: 0.6rem;
     }
   }
 }
@@ -69,4 +72,9 @@
 
 .weather-icon {
   font-size: 44px;
+}
+
+.detail_loader{
+ position: relative;
+  display: block;
 }

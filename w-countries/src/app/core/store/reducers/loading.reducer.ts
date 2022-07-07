@@ -1,4 +1,6 @@
+import { createSelector } from '@ngrx/store';
 import { createAction, props, createReducer, on } from '@ngrx/store';
+import { AppState } from 'src/app/shared/interfaces/interfaces';
 
 const actionSource = '[Loading]';
 
@@ -17,3 +19,8 @@ export const loadingReducer = createReducer(
     isLoading: isLoading,
   }))
 );
+
+
+export const AppStore =  (state: AppState) => state;
+
+export const selectIsFetching = createSelector( AppStore, (state : AppState)=> state.isFetching)

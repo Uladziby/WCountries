@@ -1,23 +1,16 @@
 import { selectRegion } from './../../core/store/reducers/countries.reducer';
-import { fetchCountries } from './../../core/store/actions/countries.action';
 import { select, Store } from '@ngrx/store';
 import { RestCountriesService } from './../../shared/services/api.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
-  catchError,
-  concatAll,
-  map,
   Observable,
-  of,
-  pipe,
   Subscription,
   tap,
 } from 'rxjs';
 import { AppState, ICountry } from 'src/app/shared/interfaces/interfaces';
-import * as fromCountries from '../../core/store/reducers/countries.reducer';
 import * as CountryAction from '../../core/store/actions/countries.action';
+import * as fromLoading from '../../core/store/reducers/loading.reducer';
 
 @Component({
   selector: 'app-countries',
@@ -33,11 +26,12 @@ export class CountriesComponent implements OnInit {
   public country!: HTMLElement;
   public subs!: Subscription;
   public targetCountry!: Observable<ICountry>;
+  public isFetch: boolean= true;
+  public isFetching$!: Observable<boolean>;
 
   constructor(
     private store: Store<AppState>,
     private router: Router,
-    private route: ActivatedRoute,
     private restService: RestCountriesService
   ) {}
 
@@ -46,10 +40,14 @@ export class CountriesComponent implements OnInit {
     this.subs = this.region$.subscribe((region) => {
       this.region = region;
     });
-
-    setTimeout(() => {
-      this.isFetching = false;
-    }, 2000);
+    this.isFetching$ = this.store.pipe(select(fromLoading.selectIsFetching));
+    this.isFetching$.subscribe(
+      (x)=> {
+        setTimeout(()=>{
+          this.isFetch = x
+        },2000)
+      }
+    );
 
     this.aSab = this.restService
       .fetchRegion(this.region)
@@ -61,7 +59,9 @@ export class CountriesComponent implements OnInit {
           );
         })
       )
-      .subscribe();
+      .subscribe(()=>{
+        this.isFetching = true
+      });
   }
 
   getDetailsAboutCountry(event: Event) {

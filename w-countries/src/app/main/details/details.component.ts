@@ -1,19 +1,16 @@
+import { isFetchinAction } from './../../core/store/reducers/loading.reducer';
 import { AppState, IServicePhotos } from './../../shared/interfaces/interfaces';
-import { RestCountriesService } from './../../shared/services/api.service';
 import {
-  AfterViewInit,
   Component,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { ICountry } from 'src/app/shared/interfaces/interfaces';
-import { find, tap, map } from 'rxjs/operators';
+import { find, tap, map, debounceTime } from 'rxjs/operators';
 import { select, Store } from '@ngrx/store';
 import * as fromCountries from '../../core/store/reducers/countries.reducer';
+import * as fromLoading from '../../core/store/reducers/loading.reducer';
 import { ImagesService } from 'src/app/shared/services/imgages.service';
 
 @Component({
@@ -21,11 +18,17 @@ import { ImagesService } from 'src/app/shared/services/imgages.service';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit, OnDestroy{
+export class DetailsComponent implements OnInit, OnDestroy {
   public currentBG!: string;
   public query!: string;
   public country!: string;
-  public countries$!: Observable<ICountry>;
+  public isFetch: boolean= true;
+  public isFetching$!: Observable<boolean>;
+  public countries$: Observable<ICountry> = this.store.pipe(select(fromCountries.selectDetailStore));
+
+  public subs!: Subscription;
+  public subsImg!: Subscription;
+
   public dataCountry: ICountry = {
     name: {
       common: '',
@@ -51,40 +54,50 @@ export class DetailsComponent implements OnInit, OnDestroy{
     area: 0,
     languages: {},
   };
-  public subs!: Subscription;
-  public subsImg!: Subscription;
+
   constructor(
     private store: Store<AppState>,
-    private route: ActivatedRoute,
     private imgService: ImagesService
   ) {}
-  
 
   ngOnInit(): void {
-    this.countries$ = this.store.pipe(select(fromCountries.selectDetailStore));
-  this.subs =   this.countries$
+    this.isFetching$ = this.store.pipe(select(fromLoading.selectIsFetching));
+    this.isFetching$.subscribe(
+      (x)=> {
+        setTimeout(()=>{
+          this.isFetch = x
+        },2000)
+      }
+    );
+    this.store.dispatch(isFetchinAction({isLoading : true}))
+    this.subs = this.countries$
       .pipe(
         tap((data: ICountry) => {
           this.dataCountry = data;
         })
       )
       .subscribe((country) => {
-       // this.query = country.name.common;
         this.subsImg = this.imgService
           .fetchPhotoByQuery(country.name.common)
           .pipe(
             tap((data: IServicePhotos) => {
               this.currentBG = data.photos[0].src.original;
-              console.log(data.photos[0], 'photo');
             })
           )
-          .subscribe()
-      })
+          .subscribe(()=>{
+            debounceTime(2000),
+            this.store.dispatch(isFetchinAction({isLoading : false}))
 
-    console.log(this.query, 'this.query');
+          });
+      });
+     /*  setTimeout(()=>{
+        this.store.dispatch(isFetchinAction({isLoading : false}))
+        console.log(this.isFetching$)
+      },4000) */
   }
   ngOnDestroy(): void {
+    this.store.dispatch(isFetchinAction({isLoading : false}))
     this.subs.unsubscribe();
     this.subsImg.unsubscribe();
-   }
+  }
 }

@@ -1,4 +1,11 @@
-<div class="container_detail" [style.background-image]="'url(' + currentBG + ')'">
+<mat-progress-bar
+  [ngStyle]="{ display: isFetch == true ? 'block' : 'none' }"
+  mode="indeterminate"
+></mat-progress-bar>
+<div
+  class="container_detail"
+  [style.background-image]="'url(' + currentBG + ')'"
+>
   <mat-card class="detail">
     <mat-card-title>
       {{ this.dataCountry.name.official }}
@@ -18,13 +25,14 @@
             {{ lang.value }}
           </li>
         </ng-container>
-        <span> borders : {{ this.dataCountry.borders}}</span>
+        <span> borders : {{ this.dataCountry.borders }}</span>
         <ng-container
           *ngFor="let currency of this.dataCountry.currencies | keyvalue"
         >
-          currencies :
           <li
-            *ngFor="let elem of dataCountry.currencies[currency.key] | keyvalue"
+            *ngFor="
+              let elem of this.dataCountry.currencies[currency.key] | keyvalue
+            "
           >
             {{ elem.value }}
           </li>

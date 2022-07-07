@@ -57,10 +57,6 @@ export const countryReducer = createReducer(
     )),
 )
 
-/* export const getRegionStore = createFeatureSelector<AppState>('region');
-export const getCountriesStore = createFeatureSelector<AppState>('countries');
-export const getDetailStore = createFeatureSelector<AppState>('detail'); */
-
 export const selectFeatureMain =  (state: AppState) => state.main;
 
 export const selectRegion = createSelector(
