@@ -1,10 +1,6 @@
 import { isFetchinAction } from './../../core/store/reducers/loading.reducer';
 import { AppState, IServicePhotos } from './../../shared/interfaces/interfaces';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { ICountry } from 'src/app/shared/interfaces/interfaces';
 import { find, tap, map, debounceTime } from 'rxjs/operators';
@@ -22,9 +18,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
   public currentBG!: string;
   public query!: string;
   public country!: string;
-  public isFetch: boolean= true;
+  public isFetch: boolean = true;
   public isFetching$!: Observable<boolean>;
-  public countries$: Observable<ICountry> = this.store.pipe(select(fromCountries.selectDetailStore));
+  public countries$: Observable<ICountry> = this.store.pipe(
+    select(fromCountries.selectDetailStore)
+  );
 
   public subs!: Subscription;
   public subsImg!: Subscription;
@@ -42,9 +40,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
       },
     },
     population: 0,
-    map: {
-      googleMaps: '',
-    },
+
     flags: {
       png: '',
       svg: '',
@@ -53,6 +49,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
     subregion: '',
     area: 0,
     languages: {},
+    map: {
+      googleMaps: '',
+    },
   };
 
   constructor(
@@ -62,14 +61,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isFetching$ = this.store.pipe(select(fromLoading.selectIsFetching));
-    this.isFetching$.subscribe(
-      (x)=> {
-        setTimeout(()=>{
-          this.isFetch = x
-        },2000)
-      }
-    );
-    this.store.dispatch(isFetchinAction({isLoading : true}))
+    this.isFetching$.subscribe((x) => {
+      setTimeout(() => {
+        this.isFetch = x;
+      }, 2000);
+    });
+    this.store.dispatch(isFetchinAction({ isLoading: true }));
     this.subs = this.countries$
       .pipe(
         tap((data: ICountry) => {
@@ -84,19 +81,14 @@ export class DetailsComponent implements OnInit, OnDestroy {
               this.currentBG = data.photos[0].src.original;
             })
           )
-          .subscribe(()=>{
+          .subscribe(() => {
             debounceTime(2000),
-            this.store.dispatch(isFetchinAction({isLoading : false}))
-
+              this.store.dispatch(isFetchinAction({ isLoading: false }));
           });
       });
-     /*  setTimeout(()=>{
-        this.store.dispatch(isFetchinAction({isLoading : false}))
-        console.log(this.isFetching$)
-      },4000) */
   }
   ngOnDestroy(): void {
-    this.store.dispatch(isFetchinAction({isLoading : false}))
+    this.store.dispatch(isFetchinAction({ isLoading: false }));
     this.subs.unsubscribe();
     this.subsImg.unsubscribe();
   }

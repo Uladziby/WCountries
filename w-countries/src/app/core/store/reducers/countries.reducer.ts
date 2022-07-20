@@ -1,5 +1,5 @@
 import { AppState, FeatureMain, ICountry } from 'src/app/shared/interfaces/interfaces';
-import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
+import { createReducer, createSelector, on } from "@ngrx/store";
 import * as CountryActions from '../actions/countries.action';
 
 
@@ -17,9 +17,7 @@ export const emptyCountry : ICountry ={
         }
     },
     population: 0,
-    map: {
-        googleMaps: ''
-    },
+
     flags: {
         png: '',
         svg: ''
@@ -27,7 +25,10 @@ export const emptyCountry : ICountry ={
     borders: [],
     subregion: '',
     area: 0,
-    languages: {}
+    languages: {},
+    map: {
+        googleMaps: ''
+    }
 }
 export const initialState : FeatureMain = {
     region: '',
