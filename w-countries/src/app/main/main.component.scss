@@ -1,0 +1,59 @@
+@import '../../styles.scss';
+:host {
+  width: 100%;
+}
+
+.card_continent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 200px;
+  min-height: 200px;
+  cursor: pointer;
+  border: solid 1px white;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  color: black;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  &_content {
+    min-height: 3rem;
+    padding: 5%;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 2%;
+  }
+  &-name {
+    @include Roboto-primary;
+    color: #ff4081;
+  }
+}
+
+.card_continent:hover {
+  transform: scale(1.1);
+  border: none;
+}
+.block-card_continent {
+  display: flex;
+  gap: 1rem;
+  width: 97%;
+  height: 88%;
+}
+.regions_container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &-title{
+    transition: all 2s ease;
+    @include Roboto-primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2% 0;
+    color: #ff4081;
+  }
+}

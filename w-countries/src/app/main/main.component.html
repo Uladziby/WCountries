@@ -1,0 +1,13 @@
+<div class="regions_container">
+    <span class="regions_container-title">Choose region!</span>
+  <div class="block-card_continent">
+    <div
+      class="card_continent"
+      [ngStyle]="{'background-image':  'url(' + region.img + ')'}"
+      *ngFor="let region of this.arrOfRegions"
+      (click)="fetchListCountries($event)"
+    >
+      <div class="card_continent-name">{{ region.name }}</div>
+    </div>
+  </div>
+</div>

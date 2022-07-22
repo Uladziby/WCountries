@@ -1,0 +1,32 @@
+:host {
+  width: 100%;
+  margin: auto 5%;
+}
+
+.card_continent {
+  cursor: pointer;
+  border: solid 1px white;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  color: #ff4081;
+  font-size: 1.5rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  &_content {
+    min-height: 3rem;
+    padding: 5%;
+  }
+}
+
+.card_continent:hover {
+  transform: scale(1.1);
+  transition: all 0.5s;
+  align-items: center;
+}
+.container_cards {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
