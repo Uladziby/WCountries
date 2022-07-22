@@ -1,3 +1,7 @@
+## Test-task WCountries. This application contains information about all the countries of the world
+### Project uses angular with ngrx .
+
+
 # WCountries
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
