@@ -1,0 +1,57 @@
+<mat-progress-bar
+  [ngStyle]="{ display: isFetch == true ? 'block' : 'none' }"
+  mode="indeterminate"
+></mat-progress-bar>
+<div
+  class="container_detail"
+  [style.background-image]="'url(' + currentBG + ')'"
+>
+  <mat-card class="detail">
+    <mat-card-title>
+      {{ this.dataCountry.name.official }}
+    </mat-card-title>
+    <mat-card-content class="detail_content">
+      <div
+        class="detail_content-left"
+        [ngStyle]="{ 'background-image': 'url(' + dataCountry.flags.png + ')' }"
+      ></div>
+      <div class="detail_content-right">
+        <span>capital: {{ this.dataCountry.capital }}</span>
+        <span> population : {{ this.dataCountry.population }} people </span>
+        <span> area : {{ this.dataCountry.area }} km^2 </span>
+        <ng-container>
+          languages :
+          <li *ngFor="let lang of dataCountry.languages | keyvalue">
+            {{ lang.value }}
+          </li>
+        </ng-container>
+        <span> borders : {{ this.dataCountry.borders }}</span>
+        <ng-container
+          *ngFor="let currency of this.dataCountry.currencies | keyvalue"
+        >
+          <li
+            *ngFor="
+              let elem of this.dataCountry.currencies[currency.key] | keyvalue
+            "
+          >
+            {{ elem.value }}
+          </li>
+        </ng-container>
+       <!--  Google Map :
+        <a href="">{{dataCountry.map.googleMaps}}</a> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<!-- <div class="weather">
+  <span type="text" class="city">City</span>>
+  <i class="weather-icon owf"></i>
+  <div class="weather-error"></div>
+  <div class="description-container">
+    <span class="temperature">22</span>
+    <span class="weather-description">22</span>
+  </div>
+  <div class="wind">22</div>
+  <div class="humidity">22</div>
+</div> -->
